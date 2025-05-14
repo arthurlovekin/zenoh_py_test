@@ -1,0 +1,9 @@
+{
+  mode: "peer", // "peer", "router", "client"
+  scouting: {
+    multicast: {
+      enabled: true,
+      address: "224.0.0.224:7447"  // Default multicast address
+    }
+  }
+} 

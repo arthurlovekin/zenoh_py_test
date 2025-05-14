@@ -1,0 +1,14 @@
+{
+  mode: "client",           // This node operates as a client (not a router)
+  connect: {                // Configuration for connecting to other nodes
+    endpoints: ["tcp/192.168.1.100:7447"]  // Connect to a Zenoh router at this IP:port
+  },
+  listen: {                 // Configuration for accepting incoming connections
+    endpoints: ["tcp/0.0.0.0:7447"]  // Listen on all network interfaces, port 7447
+  },
+  scouting: {               // Configuration for automatic peer discovery
+    multicast: {            // Use multicast for discovery
+      enabled: true         // Enable multicast discovery
+    }
+  }
+}

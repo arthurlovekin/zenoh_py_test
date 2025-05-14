@@ -1,0 +1,7 @@
+{
+  mode: "client",
+  connect: {
+    endpoints: ["tcp/192.168.0.133:7447"]  // Connect to Laptop's IP, where the router is running
+  }
+}
+
