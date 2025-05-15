@@ -1,6 +1,10 @@
 import zenoh
 import asyncio
 
+"""
+Robot object that can detect liveliness of other robots. Implemented using asyncio.
+"""
+
 class LivelinessRobot():
     def __init__(self, liveliness_key: str, liveliness_key_other: str):
         self.liveliness_key = liveliness_key

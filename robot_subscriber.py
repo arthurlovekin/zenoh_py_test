@@ -3,6 +3,10 @@ import json
 import time
 import threading
 
+"""
+Velocity subscriber using json string serialization. 
+"""
+
 class NetworkRobotBridge:
     def __init__(self, zenoh_config_name):
         """Start the velocity command subscriber"""

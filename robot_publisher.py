@@ -1,10 +1,10 @@
 import zenoh
 import json
 import time
-import random
-from typing import Union, Optional
 
-
+"""
+Velocity publisher using json string serialization.
+"""
 
 def publish_velocity_command(pub, 
                              linear_x, 
