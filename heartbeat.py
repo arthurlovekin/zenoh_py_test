@@ -3,6 +3,7 @@ import time
 from zenoh.ext import z_serialize, z_deserialize, Float64
 from typing import Optional, Callable
 
+# TODO: use liveliness instead https://github.com/eclipse-zenoh/roadmap/blob/main/rfcs/ALL/Liveliness.md
 class Heartbeat:
     """
     Publishes a heartbeat and listens for a heartbeat from a peer 

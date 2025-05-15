@@ -2,6 +2,7 @@ from heartbeat import Heartbeat
 import time
 import zenoh
 
+# TODO: use liveliness instead https://github.com/eclipse-zenoh/roadmap/blob/main/rfcs/ALL/Liveliness.md
 def on_disconnect():
     print("Disconnected from Robot")
 
