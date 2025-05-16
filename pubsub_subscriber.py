@@ -28,14 +28,17 @@ def float_listener(sample):
 def empty_listener(sample):
     print(f"Received {sample.kind} ('{sample.key_expr}': '{sample.payload.to_string()}')")
 
+def json_listener(sample):
+    print(f"Received {sample.kind} ('{sample.key_expr}': '{sample.payload.to_string()}')")
+
 if __name__ == "__main__":
     config = zenoh.Config()
     config.insert_json5("namespace", '\"my_namespace\"')
 
     with zenoh.open(config) as session:
-        temp_sub = session.declare_subscriber('myhome/kitchen/temp', string_listener)
-        time_sub = session.declare_subscriber('myhome/kitchen/time', float_listener)
-        vel_sub = session.declare_subscriber('cmd_vel', string_listener)
-        empty_sub = session.declare_subscriber('myhome/kitchen/empty', empty_listener)
+        temp_sub = session.declare_subscriber('zenoh_test/key/temp', string_listener)
+        time_sub = session.declare_subscriber('zenoh_test/key/time', float_listener)
+        json_sub = session.declare_subscriber('zenoh_test/key/json', json_listener)
+        empty_sub = session.declare_subscriber('zenoh_test/key/empty', empty_listener)
 
         time.sleep(60)
