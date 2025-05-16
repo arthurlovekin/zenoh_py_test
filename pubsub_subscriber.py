@@ -25,6 +25,9 @@ def float_listener(sample):
     print(f"Received {sample.kind} ('{sample.key_expr}': '{z_deserialize(Float64, sample.payload)}')")
     # print_sample_attributes(sample)
 
+def empty_listener(sample):
+    print(f"Received {sample.kind} ('{sample.key_expr}': '{sample.payload.to_string()}')")
+
 if __name__ == "__main__":
     config = zenoh.Config()
     config.insert_json5("namespace", '\"my_namespace\"')
@@ -33,4 +36,6 @@ if __name__ == "__main__":
         temp_sub = session.declare_subscriber('myhome/kitchen/temp', string_listener)
         time_sub = session.declare_subscriber('myhome/kitchen/time', float_listener)
         vel_sub = session.declare_subscriber('cmd_vel', string_listener)
+        empty_sub = session.declare_subscriber('myhome/kitchen/empty', empty_listener)
+
         time.sleep(60)

@@ -20,6 +20,12 @@ def publish_temp():
     temp_pub.put(buf)
     time.sleep(1)
 
+def publish_empty():
+    buf = ""
+    print(f"Putting Empty Data ('{rendered_namespace}/{empty_key}': '{buf}')...")
+    empty_pub.put(buf)
+    time.sleep(1)
+
 
 if __name__ == "__main__":
     config = zenoh.Config()
@@ -34,7 +40,11 @@ if __name__ == "__main__":
         time_key = 'myhome/kitchen/time'
         time_pub = session.declare_publisher(time_key)
 
+        empty_key = 'myhome/kitchen/empty'
+        empty_pub = session.declare_publisher(empty_key)
+
         while True:
             publish_temp()
             publish_time()
+            publish_empty()
             time.sleep(1)
