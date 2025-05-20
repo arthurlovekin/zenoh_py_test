@@ -43,6 +43,7 @@ if __name__ == "__main__":
     config.insert_json5("namespace", custom_namespace)
 
     with zenoh.open(config) as session:
+        print("Starting publisher...")
         temp_key = 'zenoh_test/key/temp'
         temp_pub = session.declare_publisher(temp_key)
 
