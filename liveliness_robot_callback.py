@@ -1,4 +1,5 @@
 import zenoh
+import time
 
 """
 Robot object that can detect liveliness of other robots. Implemented using callback.
@@ -79,8 +80,18 @@ def main():
     
     try:
         print("Robot started. Press CTRL-C to quit...")
+        print(robot.get_position())
+        time.sleep(1)
+        robot.set_position(10)
+        time.sleep(1)
+        print(robot.get_position())
+        time.sleep(1)
+        robot.set_position(5)
+        time.sleep(1)
+        print(robot.get_position())
+        print("Sleeping forever. Press CTRL-C to quit...")
+
         while True:
-            import time
             time.sleep(1)
     except KeyboardInterrupt:
         print("\nShutting down...")
