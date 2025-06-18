@@ -1,4 +1,5 @@
 import zenoh, random, time
+import argparse
 random.seed()
 from zenoh.ext import z_serialize
 import json
@@ -37,7 +38,16 @@ def publish_json():
     json_pub.put(json.dumps(buf))
 
 if __name__ == "__main__":
-    config = zenoh.Config()
+    parser = argparse.ArgumentParser(prog='zenoh-pub',
+                                    description='zenoh publisher example')
+    parser.add_argument('-c', '--config', type=str, help='path to the configuration file')
+    args = parser.parse_args()
+
+    if args.config:
+        config = zenoh.Config.from_json5(open(args.config).read())
+    else:
+        config = zenoh.Config()
+        
     custom_namespace = '\"my_namespace\"' # needs to add extra quotes to make it a string in json5
     rendered_namespace = 'my_namespace'
     config.insert_json5("namespace", custom_namespace)

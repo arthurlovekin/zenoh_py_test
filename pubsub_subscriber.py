@@ -1,4 +1,5 @@
 import zenoh, time
+import argparse
 from zenoh.ext import z_deserialize, Float64
 import json
 
@@ -40,7 +41,16 @@ def json_listener(sample):
         print(f"Error parsing JSON: {e}")
 
 if __name__ == "__main__":
-    config = zenoh.Config()
+    parser = argparse.ArgumentParser(prog='zenoh-sub',
+                                    description='zenoh subscriber example')
+    parser.add_argument('-c', '--config', type=str, help='path to the configuration file')
+    args = parser.parse_args()
+
+    if args.config:
+        config = zenoh.Config.from_json5(open(args.config).read())
+    else:
+        config = zenoh.Config()
+    
     config.insert_json5("namespace", '\"my_namespace\"')
 
     with zenoh.open(config) as session:
