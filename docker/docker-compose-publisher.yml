@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  zenoh_router:
+    build: .
+    command: zenohd
+    restart: unless-stopped
+    ports:
+      - "7447:7447"
+      - "8000:8000"
+    volumes:
+      - ./zenoh_docker:/root/.zenoh
+    environment:
+      - RUST_LOG=debug
+      - ZENOH_ROUTER_MODE=router
+      - ZENOH_LISTEN=tcp/0.0.0.0:7447
+
+  publisher:
+    build: .
+    command: python pubsub_publisher.py
+    restart: unless-stopped
+    ports:
+      - "7448:7447"
+      - "8001:8000"
+    volumes:
+      - ./zenoh_docker:/root/.zenoh
+    environment:
+      - RUST_LOG=debug
+      - ZENOH_ROUTER_MODE=client
+      - ZENOH_CONNECT=tcp/zenoh_router:7447 

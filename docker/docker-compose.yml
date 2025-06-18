@@ -1,0 +1,46 @@
+version: "3.9"
+
+services:
+  zenoh_router:
+    build: .
+    command: zenohd
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - ./zenoh_docker:/root/.zenoh
+    environment:
+      - RUST_LOG=debug
+      - ZENOH_ROUTER_MODE=router
+      - ZENOH_LISTEN=tcp/0.0.0.0:7447
+      - ZENOH_LISTEN=multicast
+    hostname: zenoh-router
+
+  publisher:
+    build: .
+    command: python pubsub_publisher.py
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - ./zenoh_docker:/root/.zenoh
+    environment:
+      - RUST_LOG=debug
+      - ZENOH_ROUTER_MODE=peer
+      - ZENOH_LISTEN=multicast
+      - ZENOH_CONNECT=tcp/zenoh-router:7447
+
+  subscriber:
+    build: .
+    command: python pubsub_subscriber.py
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - ./zenoh_docker:/root/.zenoh
+    environment:
+      - RUST_LOG=debug
+      - ZENOH_ROUTER_MODE=peer
+      - ZENOH_LISTEN=multicast
+      - ZENOH_CONNECT=tcp/zenoh-router:7447
+
+networks:
+  zenoh_net:
+    driver: bridge 

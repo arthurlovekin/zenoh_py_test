@@ -1,0 +1,15 @@
+version: "3.9"
+
+services:
+  publisher:
+    build: .
+    command: python pubsub_publisher.py
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - ./zenoh_docker:/root/.zenoh
+    environment:
+      - RUST_LOG=debug
+      - ZENOH_ROUTER_MODE=peer
+      - ZENOH_LISTEN=multicast
+      - ZENOH_CONNECT=tcp/zenoh-router:7447  # Default hostname, can be overridden with -e ZENOH_CONNECT=tcp/actual-ip:7447 

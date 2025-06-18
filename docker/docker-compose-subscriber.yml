@@ -1,0 +1,16 @@
+version: "3.9"
+
+services:
+  subscriber:
+    build: .
+    command: python pubsub_subscriber.py
+    restart: unless-stopped
+    ports:
+      - "7447:7447"
+      - "8000:8000"
+    volumes:
+      - ./zenoh_docker:/root/.zenoh
+    environment:
+      - RUST_LOG=debug
+      - ZENOH_ROUTER_MODE=client
+      - ZENOH_CONNECT=tcp/PUBLISHER_IP:7447  # Replace PUBLISHER_IP with the actual IP of the publisher machine 
